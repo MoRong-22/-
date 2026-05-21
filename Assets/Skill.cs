@@ -13,14 +13,18 @@ public abstract class Skill
     /// <summary>
     /// 构造方法
     /// </summary>
+    /// <param name="Name">技能名字</param>
+    /// <param name="description">技能</param>
     /// <param name="damage">技能伤害</param>
     /// <param name="maxCharges">如果是次数技能的话 技能数量上限</param>
     /// <param name="countRangeTimeMax">技能数量恢复时间(秒)</param>
     /// <param name="manaCost">魔力消耗</param>
     /// <param name="cooldownMax">技能CD</param>
     /// <param name="currentCharges">技能数量</param> 
-    public Skill(float damage,int maxCharges,float countRangeTimeMax,float manaCost,float cooldownMax,int currentCharges = 1)
+    public Skill(String Name,String description,float damage,int maxCharges,float countRangeTimeMax,float manaCost,float cooldownMax,int currentCharges = 1)
     {
+        this.Name = Name;
+        this.Description = description;
         this.damage = damage;
         this.maxCharges = maxCharges;
         this.countRangeTimeMax = countRangeTimeMax;
@@ -174,5 +178,6 @@ public abstract class Skill
     /// <param name="projectileFunc"></param>
     public void SetProjectile(Func<Projectile> projectileFunc) => projectile = projectileFunc;
     public void SetCharacter(Func<Character> characterFunc) => character = characterFunc;
+    
     #endregion
 }
