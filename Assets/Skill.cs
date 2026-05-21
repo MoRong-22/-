@@ -13,19 +13,20 @@ public abstract class Skill
     /// <summary>
     /// 构造方法
     /// </summary>
-    /// <param name="Damage">技能伤害</param>
-    /// <param name="MaxCharges">如果是次数技能的话 技能数量上限</param>
-    /// <param name="CountRangeTimeMax">技能数量恢复时间(秒)</param>
-    /// <param name="ManaCost">魔力消耗</param>
-    /// <param name="CooldownMax">技能CD</param>
-    public Skill(float Damage,int MaxCharges,float CountRangeTimeMax,float ManaCost,float CooldownMax,int CurrentCharges = 1)
+    /// <param name="damage">技能伤害</param>
+    /// <param name="maxCharges">如果是次数技能的话 技能数量上限</param>
+    /// <param name="countRangeTimeMax">技能数量恢复时间(秒)</param>
+    /// <param name="manaCost">魔力消耗</param>
+    /// <param name="cooldownMax">技能CD</param>
+    /// <param name="currentCharges">技能数量</param> 
+    public Skill(float damage,int maxCharges,float countRangeTimeMax,float manaCost,float cooldownMax,int currentCharges = 1)
     {
-        this.Damage = Damage;
-        this.MaxCharges = MaxCharges;
-        this.CountRangeTimeMax = CountRangeTimeMax;
-        this.ManaCost = ManaCost;
-        this.CooldownMax = CooldownMax;
-        this.CurrentCharges = CurrentCharges;
+        this.damage = damage;
+        this.maxCharges = maxCharges;
+        this.countRangeTimeMax = countRangeTimeMax;
+        this.manaCost = manaCost;
+        this.cooldownMax = cooldownMax;
+        this.currentCharges = currentCharges;
     }
     #endregion
     #region 技能的基本属性
@@ -36,15 +37,15 @@ public abstract class Skill
     /// <summary>
     /// 伤害
     /// </summary>
-    public float Damage;
+    public float damage;
     /// <summary>
     /// 技能最高数
     /// </summary>
-    public int MaxCharges;
+    public int maxCharges;
     /// <summary>
     /// 当前技能数
     /// </summary>
-    public int CurrentCharges;
+    public int currentCharges;
     /// <summary>
     /// 技能恢复时间
     /// </summary>
@@ -52,11 +53,11 @@ public abstract class Skill
     /// <summary>
     /// 技能恢复最大时间
     /// </summary>
-    public float CountRangeTimeMax;
+    public float countRangeTimeMax;
     /// <summary>
     /// 魔力消耗
     /// </summary>
-    public float ManaCost;
+    public float manaCost;
     /// <summary>
     /// 技能CD
     /// </summary>
@@ -64,7 +65,7 @@ public abstract class Skill
     /// <summary>
     /// 最大CD
     /// </summary>
-    public float CooldownMax;
+    public float cooldownMax;
     /// <summary>
     /// 正在冷却
     /// </summary>
@@ -72,11 +73,11 @@ public abstract class Skill
     /// <summary>
     /// 拥有技能
     /// </summary>
-    public bool HasSkillCount { get => CurrentCharges == 0; }
+    public bool HasSkillCount { get => currentCharges == 0; }
     /// <summary>
     /// 魔力足够
     /// </summary>
-    public bool ManaEnough { get => ManaCost < character().StatMana; }
+    public bool ManaEnough { get => manaCost < character().StatMana; }
     #endregion 
 
     #region 技能的基本信息
@@ -131,10 +132,10 @@ public abstract class Skill
     public virtual void Use()
     {
         if (CanUseSkill()) return;
-        character().StatMana -= ManaCost;
-        Cooldown = CooldownMax;
+        character().StatMana -= manaCost;
+        Cooldown = cooldownMax;
         SkillTime = 0;
-        CurrentCharges -= 1;
+        currentCharges -= 1;
     }
     /// <summary>
     /// 更新
@@ -149,12 +150,12 @@ public abstract class Skill
     /// </summary>
     public virtual void CountRecovery()
     {
-        if(CurrentCharges < MaxCharges)
+        if(currentCharges < maxCharges)
         {
             CountRangeTime+= Time.deltaTime; 
-            if(CountRangeTime > CountRangeTimeMax)
+            if(CountRangeTime > countRangeTimeMax)
             {
-                CurrentCharges += 1;
+                currentCharges += 1;
                 CountRangeTime = 0;
             }
         }
