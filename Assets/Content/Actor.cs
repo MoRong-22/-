@@ -6,9 +6,9 @@ using Vector3 = System.Numerics.Vector3;
 
 namespace Content
 {
-    public abstract class Actor : ILevelable, IStats, ISkillCaster, IDamageable, IMovable
+    public abstract class Actor : ILevelable, IStats, ISkillCaster, IDamageable, IMovable, IStatusEffectCaster
     {
-        #region ILevelable
+        #region 等级控制
 
         public int MaxLevel { get; set; }
         public int CurrentLevel { get; set; }
@@ -23,7 +23,7 @@ namespace Content
 
         #endregion
 
-        #region IStats
+        #region 状态控制
 
         public float MaxHealth { get; set; }
         public float CurrentHealth { get; set; }
@@ -38,11 +38,10 @@ namespace Content
 
         #endregion
 
-        #region ISkillCaster
+        #region 技能控制
 
         public Skill[] Skills { get; set; }
         public Skill CurrentSkill { get; set; }
-        public List<StatusEffect> Effects { get; set; }
 
         public virtual bool CanUseSkill()
         {
@@ -53,14 +52,38 @@ namespace Content
 
         #endregion
 
-        #region IDamageable
+        #region 状态附着控制
+        
+        public List<StatusEffect> Effects { get; set; }
 
-        public virtual void TakeDamage(float damageAmount) { }
-        public virtual void UnderAttack() { }
+        public bool CanUpdateEffect(StatusEffect effect)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public virtual void UpdateEffect(StatusEffect effect)
+        {
+            throw new System.NotImplementedException();
+        }
 
         #endregion
 
-        #region IMovable
+        #region 伤害控制
+
+        public Damage_class Damage_class { get; set; }
+        public virtual bool CanUnderAttack()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public virtual void UnderAttack(){}
+        public virtual void TakeDamage(Damage_class damageAmount){}
+        public virtual void OnHitNPC(NPC npc){}
+        
+        public virtual void OnHitCharacter(Character character){}
+        #endregion
+
+        #region 移动控制
 
         public Vector3 Center { get; set; }
         public Quaternion Rotation { get; set; }

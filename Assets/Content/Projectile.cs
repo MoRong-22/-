@@ -1,12 +1,13 @@
+using AboutDamage;
 using Content.IHelper;
 using Quaternion = System.Numerics.Quaternion;
 using Vector3 = System.Numerics.Vector3;
 
 namespace Content
 {
-    public abstract class Projectile : IUpdateable, IMovable
+    public abstract class Projectile : IUpdateable, IMovable,IDamageable
     {
-        #region IMovable
+        #region 移动控制
 
         public Vector3 Center { get; set; }
         public Quaternion Rotation { get; set; }
@@ -14,7 +15,7 @@ namespace Content
 
         #endregion
 
-        #region IUpdateable
+        #region 更新控制
 
         public float TimeLeft { get; set; }
         public float MaxTimeLeft { get; set; }
@@ -29,5 +30,20 @@ namespace Content
         {
             return false;
         }
+
+        #region 伤害控制
+
+        public Damage_class Damage_class { get; set; }
+        public virtual bool CanUnderAttack()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public virtual void UnderAttack(){}
+        public virtual void TakeDamage(Damage_class damageAmount){}
+        public virtual void OnHitNPC(NPC npc){}
+        
+        public virtual void OnHitCharacter(Character character){}
+        #endregion
     }
 }

@@ -8,7 +8,6 @@ namespace Content.IHelper
     {
         Skill[] Skills { get; set; }
         Skill CurrentSkill { get; set; }
-        List<StatusEffect> Effects { get; set; }
         bool CanUseSkill();
         void UseSkill();
     }
