@@ -1,4 +1,5 @@
 ﻿using System;
+using Content;
 using Unity.VisualScripting;
 using UnityEngine;
 namespace AboutDamage
