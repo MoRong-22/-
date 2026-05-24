@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AboutCollide;
 using AboutDamage;
 using Content.IHelper;
 using Quaternion = System.Numerics.Quaternion;
@@ -6,7 +7,7 @@ using Vector3 = System.Numerics.Vector3;
 
 namespace Content
 {
-    public abstract class Actor : ILevelable, IStats, ISkillCaster, IDamageable, IMovable, IStatusEffectCaster
+    public abstract class Actor : ILevelable, IStats, ISkillCaster, IDamageable, IMovable, IStatusEffectCaster, IColliding
     {
         #region 等级控制
 
@@ -88,6 +89,18 @@ namespace Content
         public Vector3 Center { get; set; }
         public Quaternion Rotation { get; set; }
         public Vector3 Velocity { get; set; }
+
+        #endregion
+
+        #region 碰撞控制
+        public HitBox HitBox { get; set; }
+
+        public bool Colliding(HitBox targetBox)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ModifyHitBox(HitBox box){}
 
         #endregion
     }

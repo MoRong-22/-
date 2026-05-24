@@ -1,3 +1,4 @@
+using AboutCollide;
 using AboutDamage;
 using Content.IHelper;
 using Quaternion = System.Numerics.Quaternion;
@@ -5,7 +6,7 @@ using Vector3 = System.Numerics.Vector3;
 
 namespace Content
 {
-    public abstract class Projectile : IUpdateable, IMovable,IDamageable
+    public abstract class Projectile : IUpdateable, IMovable,IDamageable,IColliding
     {
         #region 移动控制
 
@@ -26,11 +27,6 @@ namespace Content
 
         #endregion
 
-        public virtual bool Collide()
-        {
-            return false;
-        }
-
         #region 伤害控制
 
         public Damage_class Damage_class { get; set; }
@@ -44,6 +40,15 @@ namespace Content
         public virtual void OnHitNPC(NPC npc){}
         
         public virtual void OnHitCharacter(Character character){}
+        #endregion
+
+        #region 碰撞控制
+        public void ModifyHitBox(HitBox box){}
+        public HitBox HitBox { get; set; }
+        public bool Colliding(HitBox targetBox)
+        {
+            throw new System.NotImplementedException();
+        }
         #endregion
     }
 }

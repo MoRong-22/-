@@ -8,6 +8,10 @@ namespace AboutCollide
     public class HitBox
     {
         /// <summary>
+        /// XYZ轴的缩放倍率
+        /// </summary>
+        public Vector3 scale;
+        /// <summary>
         /// 理论上来说 你应该用不了他
         /// </summary>
         private Vector3 Position;
@@ -26,6 +30,7 @@ namespace AboutCollide
 
         public HitBox(Vector3 pos, float xLength, float yLength, float zLength)
         {
+            scale = Vector3.one;
             Position = pos;
             XLength = xLength;
             YLength = yLength;
@@ -34,6 +39,7 @@ namespace AboutCollide
 
         public HitBox(float x, float y, float z, float xLength, float yLength, float zLength)
         {
+            scale = Vector3.one;
             Position = new Vector3(x, y, z);
             XLength = xLength;
             YLength = yLength;
@@ -42,19 +48,32 @@ namespace AboutCollide
 
         public HitBox(Vector3 min, Vector3 max)
         {
+            scale = Vector3.one;
             Position = (min + max) * 0.5f;
             XLength = Mathf.Abs(max.x - min.x);
             YLength = Mathf.Abs(max.y - min.y);
             ZLength = Mathf.Abs(max.z - min.z);
         }
         /// <summary>
+        /// 缩放后的实际X轴长度
+        /// </summary>
+        private float EffectiveXLength => XLength * scale.x;
+        /// <summary>
+        /// 缩放后的实际Y轴长度
+        /// </summary>
+        private float EffectiveYLength => YLength * scale.y;
+        /// <summary>
+        /// 缩放后的实际Z轴长度
+        /// </summary>
+        private float EffectiveZLength => ZLength * scale.z;
+        /// <summary>
         /// 最小判定点
         /// </summary>
-        public Vector3 Min => new Vector3(Position.x - XLength * 0.5f, Position.y - YLength * 0.5f, Position.z - ZLength * 0.5f);
+        public Vector3 Min => new Vector3(Position.x - EffectiveXLength * 0.5f, Position.y - EffectiveYLength * 0.5f, Position.z - EffectiveZLength * 0.5f);
         /// <summary>
         /// 最大判定点
         /// </summary>
-        public Vector3 Max => new Vector3(Position.x + XLength * 0.5f, Position.y + YLength * 0.5f, Position.z + ZLength * 0.5f);
+        public Vector3 Max => new Vector3(Position.x + EffectiveXLength * 0.5f, Position.y + EffectiveYLength * 0.5f, Position.z + EffectiveZLength * 0.5f);
         /// <summary>
         /// 距离属性
         /// </summary>
@@ -212,20 +231,20 @@ namespace AboutCollide
         /// <returns></returns>
         public HitBox Expanded(float amount)
         {
-            return new HitBox(Position, XLength + amount, YLength + amount, ZLength + amount);
+            return new HitBox(Position, XLength + amount, YLength + amount, ZLength + amount) { scale = scale };
         }
         /// <summary>
         /// 体积
         /// </summary>
-        public float Volume => XLength * YLength * ZLength;
+        public float Volume => EffectiveXLength * EffectiveYLength * EffectiveZLength;
         /// <summary>
         /// 限制大小
         /// </summary>
-        public Vector3 Size => new Vector3(XLength, YLength, ZLength);
+        public Vector3 Size => new Vector3(EffectiveXLength, EffectiveYLength, EffectiveZLength);
         /// <summary>
         /// 总大小的一半
         /// </summary>
-        public Vector3 HalfSize => new Vector3(XLength * 0.5f, YLength * 0.5f, ZLength * 0.5f);
+        public Vector3 HalfSize => new Vector3(EffectiveXLength * 0.5f, EffectiveYLength * 0.5f, EffectiveZLength * 0.5f);
     }
     /// <summary>
     /// 创建专门用于碰撞检测的结构体
