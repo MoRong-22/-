@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using AboutCollide;
 using AboutDamage;
 using Content.IHelper;
+using UnityEngine;
 using Quaternion = System.Numerics.Quaternion;
 using Vector3 = System.Numerics.Vector3;
 
 namespace Content
 {
-    public abstract class Actor : ILevelable, IStats, ISkillCaster, IDamageable, IMovable, IStatusEffectCaster, IColliding
+    public abstract class Actor : ILevelable, IStats, ISkillCaster, IDamageable, IMovable, IStatusEffectCaster, IColliding , IDrawHelper
     {
         #region 等级控制
 
@@ -102,6 +103,18 @@ namespace Content
 
         public void ModifyHitBox(HitBox box){}
 
+        #endregion
+
+        #region 绘制所需
+
+        public virtual void Draw(){}
+        public virtual bool PreDraw() => false;
+        public virtual void PostDraw(){}
+
+        public Color MainColor { get; set; }
+        public Color OutlineColor { get; set; }
+        public float OutlineWidth { get; set; }
+        public bool EnableOutline { get; set; }
         #endregion
     }
 }

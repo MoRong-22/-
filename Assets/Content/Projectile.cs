@@ -1,12 +1,13 @@
 using AboutCollide;
 using AboutDamage;
 using Content.IHelper;
+using UnityEngine;
 using Quaternion = System.Numerics.Quaternion;
 using Vector3 = System.Numerics.Vector3;
 
 namespace Content
 {
-    public abstract class Projectile : IUpdateable, IMovable,IDamageable,IColliding
+    public abstract class Projectile : IUpdateable, IMovable,IDamageable,IColliding,IDrawHelper
     {
         #region 移动控制
 
@@ -49,6 +50,17 @@ namespace Content
         {
             throw new System.NotImplementedException();
         }
+        #endregion
+
+        #region 绘制控制
+
+        public float OutlineWidth { get; set; }
+        public bool EnableOutline { get; set; }
+        public Color OutlineColor { get; set; }
+        public Color MainColor { get; set; }
+        public virtual void Draw(){}
+        public virtual bool PreDraw() => true;
+        public virtual void PostDraw(){}
         #endregion
     }
 }
