@@ -178,7 +178,7 @@ namespace  Content
         /// </summary>
         public virtual void Use()
         {
-            if (CanUseSkill()) return;
+            if (!CanUseSkill()) return;
             character().CurrentMana -= manaCost;
             Cooldown = cooldownMax;
             SkillTime = 0;

@@ -79,5 +79,6 @@ namespace Content.Drawing
             var matrix = Matrix4x4.TRS(position, rotation, new Vector3(size.x, size.y, 1));
             Graphics.DrawMesh(_quad, matrix, _mat, 0);
         }
+
     }
 }
