@@ -3,12 +3,12 @@ using AboutCollide;
 using AboutDamage;
 using Content.IHelper;
 using UnityEngine;
-using Quaternion = System.Numerics.Quaternion;
-using Vector3 = System.Numerics.Vector3;
+using static UnityEngine.Quaternion;
+using static UnityEngine.Vector3;
 
 namespace Content
 {
-    public abstract class Actor : ILevelable, IStats, ISkillCaster, IDamageable, IMovable, IStatusEffectCaster, IColliding , IDrawHelper
+    public abstract class Actor : ILevelable, IStats, ISkillCaster, IDamageable, IMovable, IStatusEffectCaster, IColliding , IDrawHelper,IAIControllable
     {
         #region 等级控制
 
@@ -115,6 +115,10 @@ namespace Content
         public Color OutlineColor { get; set; }
         public float OutlineWidth { get; set; }
         public bool EnableOutline { get; set; }
+        #endregion
+
+        #region AI控制
+        public virtual void AI(){}
         #endregion
     }
 }

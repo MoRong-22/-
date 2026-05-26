@@ -2,8 +2,7 @@ using Content.IHelper;
 
 namespace Content
 {
-    public abstract class NPC : Actor, IAIControllable 
+    public abstract class NPC : Actor
     {
-        public virtual void AI() { }
     }
 }

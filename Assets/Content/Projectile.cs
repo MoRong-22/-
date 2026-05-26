@@ -2,8 +2,8 @@ using AboutCollide;
 using AboutDamage;
 using Content.IHelper;
 using UnityEngine;
-using Quaternion = System.Numerics.Quaternion;
-using Vector3 = System.Numerics.Vector3;
+using static UnityEngine.Quaternion;
+using static UnityEngine.Vector3;
 
 namespace Content
 {

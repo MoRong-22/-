@@ -1,5 +1,6 @@
 using System;
-using System.Drawing;
+using UnityEngine;
+using Random = System.Random;
 
 //TODO : 每日事件 包含事件的名字 描述 以及事件的触发条件 以及事件的结果
 namespace Content
