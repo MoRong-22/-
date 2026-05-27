@@ -13,7 +13,6 @@ namespace  Content
         /// 游戏实例
         /// </summary>
         public static Game instance;
-
         /// <summary>
         /// 每日结束
         /// </summary>
@@ -22,7 +21,10 @@ namespace  Content
         /// 每日开始
         /// </summary>
         public bool IsDayOpen{get; set;}
-
+        /// <summary>
+        /// 开始游戏?
+        /// </summary>
+        public bool startGame = false;
         /// <summary>
         /// 角色对象池 
         /// </summary>
@@ -53,7 +55,7 @@ namespace  Content
         void Update()
         {
             SpriteDrawer.Draw(Texture2D.whiteTexture,new Vector3(1,1,1),new Vector2(1,1),Color.white);
-            foreach(Character character in Characters)
+            foreach(Character character in instance.Characters)
             {
                 character.AI();
                 if(character.PreDraw())

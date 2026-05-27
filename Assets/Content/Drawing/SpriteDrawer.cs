@@ -59,7 +59,13 @@ namespace Content.Drawing
             var matrix = Matrix4x4.TRS(position, rot, new Vector3(size.x, size.y, 1));
             Graphics.DrawMesh(_quad, matrix, _mat, 0);
         }
-
+        /// <summary>
+        /// 永远面向屏幕的绘制
+        /// </summary>
+        /// <param name="texture">贴图</param>
+        /// <param name="position">位置</param>
+        /// <param name="size">尺寸</param>
+        /// <param name="color">颜色</param>
         public static void DrawBillboard(Texture texture, Vector3 position, Vector2 size, Color color)
         {
             EnsureResources();

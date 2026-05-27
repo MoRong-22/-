@@ -1,0 +1,22 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.4/staging' branch; Version is '6000.4.6f1 (0b051c2e5d54) revision 722204'; Using compiler version '194234433'; Build Type 'Release'
+OS: 'Windows 11  (10.0.26200) CoreCountrySpecific' Language: 'zh' Physical Memory: 15584 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+System  architecture: x64
+Process architecture: x64
+Date: 2026-05-27T05:09:40Z
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-Wrk07" at "2026-05-27T05:09:40.2747798Z"
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.4.6f1\Editor\Unity.exe
+-projectPath
+D:\UnityProject\灵界守墟
+-quit
+-batchmode
+-logFile
+D:\UnityProject\灵界守墟\regenerate_log.txt
+-executeMethod
+UnityEditor.SyncVS.SyncSolution
+Successfully changed project path to: D:\UnityProject\灵界守墟
+D:/UnityProject/灵界守墟
+Exiting without the bug reporter. Application will terminate with return code 1
