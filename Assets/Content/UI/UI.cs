@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.UI;
 
 namespace Content.UI
 {
@@ -50,9 +51,20 @@ namespace Content.UI
         /// UI使用贴图
         /// </summary>
         public Texture2D UITexture;
-        
 
         #endregion
+        /// <summary>
+        /// 用于获取Image 以便别的检测方法检测射线
+        /// </summary>
+        protected virtual void Awake()
+        {
+            if (GetComponent<Graphic>() == null)
+            {
+                var img = gameObject.AddComponent<Image>();
+                img.color = new UnityEngine.Color(0, 0, 0, 0);
+            }
+        }
+        
         #region 鼠标悬停
         /// <summary>
         /// 鼠标悬停

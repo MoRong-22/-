@@ -21,9 +21,5 @@ namespace Content.IHelper
         /// 当前升级进度
         /// </summary>
         float LevelProgress { get; set; }
-        /// <summary>
-        /// 升级调用
-        /// </summary>
-        void LevelUp();
     }
 }

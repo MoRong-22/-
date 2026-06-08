@@ -1,20 +1,21 @@
+using System.Collections.Generic;
 using AboutCollide;
 using AboutDamage;
 using Content.IHelper;
 using UnityEngine;
-using static UnityEngine.Quaternion;
-using static UnityEngine.Vector3;
 
 namespace Content
 {
-    public abstract class Projectile : IUpdateable, IMovable,IDamageable,IColliding,IDrawHelper
+    public abstract class Projectile : MonoBehaviour,IUpdateable, IMovable,IDamageable,IColliding,IDrawHelper
     {
+        public GameObject projectilePrefab;
+        public virtual void SetDefault(Damage_class damageClass,Vector3 position, Quaternion rotation, Vector3 velocity, float speed){}
         #region 移动控制
 
         public Vector3 Center { get; set; }
         public Quaternion Rotation { get; set; }
         public Vector3 Velocity { get; set; }
-
+        public float Speed { get; set; }
         #endregion
 
         #region 更新控制
@@ -46,7 +47,7 @@ namespace Content
         #region 碰撞控制
         public void ModifyHitBox(HitBox box){}
         public HitBox HitBox { get; set; }
-        public bool Colliding(HitBox targetBox)
+        public virtual bool Colliding(HitBox targetBox)
         {
             throw new System.NotImplementedException();
         }
@@ -62,5 +63,23 @@ namespace Content
         public virtual bool PreDraw() => true;
         public virtual void PostDraw(){}
         #endregion
+        
+        
+        
+        /// <summary>
+        /// 创建弹幕：new 一个空物体 + AddComponent，加入对象池
+        /// 视觉由子类在 Awake/Start 里自己处理
+        /// </summary>
+        public static T NewProjectile<T>(Vector3 position, Quaternion rotation,
+            Vector3 velocity, float speed, Damage_class damageClass) where T : Projectile
+        {
+            GameObject obj = new(typeof(T).Name);
+            obj.transform.position = position;
+            obj.transform.rotation = rotation;
+            T proj = obj.AddComponent<T>();
+            proj.SetDefault(damageClass, position, rotation, velocity, speed);
+            Game.instance.Projectiles.Add(proj);
+            return proj;
+        }
     }
 }
