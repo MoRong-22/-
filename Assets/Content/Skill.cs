@@ -100,7 +100,7 @@ namespace  Content
         /// </summary>
         public bool HasSkillCount
         {
-            get => currentCharges == 0;
+            get => currentCharges > 0;
         }
 
         /// <summary>
@@ -129,6 +129,10 @@ namespace  Content
         /// 技能类型
         /// </summary>
         public SkillType skillType;
+        /// <summary>
+        /// 伤害修改
+        /// </summary>
+        public virtual void ModifyDamage(){}
 
         #endregion
 

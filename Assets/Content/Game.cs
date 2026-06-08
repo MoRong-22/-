@@ -43,7 +43,10 @@ namespace  Content
         /// NPC对象池
         /// </summary>
         public List<NPC> NPCs { get; private set; } = new List<NPC>();
-
+        /// <summary>
+        /// 地图
+        /// </summary>
+        public Map map { get; set; }
         #endregion
 
         void Start()
@@ -54,14 +57,42 @@ namespace  Content
         
         void Update()
         {
-            SpriteDrawer.Draw(Texture2D.whiteTexture,new Vector3(1,1,1),new Vector2(1,1),Color.white);
-            foreach(Character character in instance.Characters)
+            instance.map.MainCharacter.AI();
+            if (instance.map.MainCharacter.PreDraw())
+            {
+                instance.map.MainCharacter.Draw();
+                instance.map.MainCharacter.PostDraw();
+            }
+            foreach(Character character in instance.map.SecondaryCharacter)
             {
                 character.AI();
                 if(character.PreDraw())
                 {
                     character.Draw();
                     character.PostDraw();
+                }
+            }
+
+            foreach (NPC npc in instance.NPCs)
+            {
+                
+            }
+
+            foreach (Projectile proj in instance.Projectiles)
+            {
+                proj.OnUpdate();
+                proj.OnFixedUpdate();
+                if (proj.PreDraw())
+                {
+                    proj.Draw();
+                    proj.PostDraw();
+                }
+
+                foreach (NPC npc in instance.NPCs)
+                {
+                    proj.Colliding(npc.HitBox);
+                    proj.OnHitNPC(npc);
+                    
                 }
             }
         }

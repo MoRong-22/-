@@ -16,8 +16,12 @@ namespace Content.IHelper
         /// </summary>
         Quaternion Rotation { get; set; }
         /// <summary>
-        /// 实例速度
+        /// 实例速度方向
         /// </summary>
         Vector3 Velocity { get; set; }
+        /// <summary>
+        /// 速度
+        /// </summary>
+        float Speed { get; set; }
     }
 }

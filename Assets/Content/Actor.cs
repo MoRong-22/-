@@ -8,11 +8,22 @@ using static UnityEngine.Vector3;
 
 namespace Content
 {
-    public abstract class Actor : ILevelable, IStats, ISkillCaster, IDamageable, IMovable, IStatusEffectCaster, IColliding , IDrawHelper,IAIControllable
+    public abstract class Actor : MonoBehaviour,IName,ISetting,ILevelable, IStats, ISkillCaster, IDamageable, IMovable, IStatusEffectCaster, IColliding , IDrawHelper,IAIControllable
     {
         #region 等级控制
 
-        public int MaxLevel { get; set; }
+        public GameObject gameObject;
+        public int MaxLevel
+        {
+            get
+            {
+                return MaxLevel;
+            }
+            set
+            {
+                MaxLevel = 10;
+            }
+        }
         public int CurrentLevel { get; set; }
         public float MaxLevelProgress { get; set; }
         public float LevelProgress { get; set; }
@@ -37,7 +48,6 @@ namespace Content
         public float MagicDefense { get; set; }
         public float DamageReduce { get; set; }
         public bool IsActive => CurrentHealth > 0;
-
         #endregion
 
         #region 技能控制
@@ -49,9 +59,7 @@ namespace Content
         {
             return CurrentMana > CurrentSkill.manaCost;
         }
-
-        public virtual void UseSkill() { }
-
+        public virtual void UseSkill() {}
         #endregion
 
         #region 状态附着控制
@@ -85,12 +93,16 @@ namespace Content
         public virtual void OnHitCharacter(Character character){}
         #endregion
 
+        #region 名字
+        public string Name { get; set; }
+        #endregion
+
         #region 移动控制
 
         public Vector3 Center { get; set; }
         public Quaternion Rotation { get; set; }
         public Vector3 Velocity { get; set; }
-
+        public float Speed { get; set; }
         #endregion
 
         #region 碰撞控制
@@ -119,6 +131,12 @@ namespace Content
 
         #region AI控制
         public virtual void AI(){}
+        #endregion
+
+        #region 值设置
+
+        public virtual void SetDefault(){}
+        public virtual void Modify(){}
         #endregion
     }
 }

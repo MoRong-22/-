@@ -8,6 +8,21 @@ namespace AboutDamage
     /// </summary>
     public class Damage_class
     {
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="damage_enum">伤害类型</param>
+        /// <param name="damage">伤害值</param>
+        /// <param name="physicalPentrate">物穿</param>
+        /// <param name="magicPentrate">法穿</param>
+        /// <param name="physicalPentrate_P">百分比物穿(单位%)</param>
+        /// <param name="magicPentrate_P">百分比法穿(单位%)</param>
+        /// <param name="criticalRate">暴击率</param>
+        /// <param name="criticalMultiplier">暴击倍率</param>
+        public Damage_class(Damage_enum damage_enum,float damage,float physicalPentrate,float magicPentrate,float physicalPentrate_P,float magicPentrate_P,float criticalRate,float criticalMultiplier)
+        {
+            
+        }
         #region 伤害类的基础数值
         /// <summary>
         /// 伤害类型
@@ -70,6 +85,7 @@ namespace AboutDamage
         /// 随机数
         /// </summary>
         private Random random = new Random();
+
 
         #region 伤害计算方法
         /// <summary>
