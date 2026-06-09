@@ -127,6 +127,7 @@ namespace Content
         public Color OutlineColor { get; set; }
         public float OutlineWidth { get; set; }
         public bool EnableOutline { get; set; }
+        public Texture2D Texture { get; set; }
         #endregion
 
         #region AI控制

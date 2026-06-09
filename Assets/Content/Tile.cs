@@ -6,7 +6,7 @@ namespace Content
     /// <summary>
     /// 物体类
     /// </summary>
-    public class Tile : MonoBehaviour
+    public abstract class Tile : MonoBehaviour
     {
         
     }

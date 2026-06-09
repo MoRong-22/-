@@ -37,5 +37,9 @@ namespace Content.IHelper
         /// 在Draw()之后运行 不知道有啥用 反正先留着
         /// </summary>
         void PostDraw();
+        /// <summary>
+        /// 对象贴图
+        /// </summary>
+        Texture2D Texture { get; set; }
     }
 }

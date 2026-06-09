@@ -16,7 +16,7 @@ namespace Content.IHelper
         /// <summary>
         /// 是否存活
         /// </summary>
-        bool IsActive { get; }
+        bool IsActive { get;}
         /// <summary>
         /// 更新方法
         /// </summary>
