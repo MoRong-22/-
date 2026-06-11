@@ -21,7 +21,14 @@ namespace AboutDamage
         /// <param name="criticalMultiplier">暴击倍率</param>
         public Damage_class(Damage_enum damage_enum,float damage,float physicalPentrate,float magicPentrate,float physicalPentrate_P,float magicPentrate_P,float criticalRate,float criticalMultiplier)
         {
-            
+            this.damage_enum = damage_enum;
+            this.damage = damage;
+            this.PhysicsPenetrate = physicalPentrate;
+            this.PhysicalPentrate_Percentage = physicalPentrate_P;
+            this.MagicPenetrate = magicPentrate;
+            this.MagicPentrate_Percentage = magicPentrate_P;
+            this.CriticalRate = criticalRate;
+            this.CriticalMultiplier = criticalMultiplier;
         }
         #region 伤害类的基础数值
         /// <summary>

@@ -1,9 +1,12 @@
-﻿namespace Content.Skills.FirstCharacter
+﻿using UnityEngine.InputSystem;
+
+namespace Content.Skills.FirstCharacter
 {
     public class Skill_one : Skill
     {
-        public Skill_one(string Name, string description, float damage, int maxCharges, float countRangeTimeMax, float manaCost, float cooldownMax, int currentCharges = 1) : base(Name, description, damage, maxCharges, countRangeTimeMax, manaCost, cooldownMax, currentCharges)
+        public Skill_one() : base("Skill_one","",0,0,0,0,0,new KeyBind(Keyboard.current.zKey,"第一个技能 "))
         {
+            
         }
     }
 }

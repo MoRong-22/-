@@ -45,5 +45,14 @@ namespace Content.IHelper
         /// 是否存活
         /// </summary>
         bool IsActive { get; }
+        /// <summary>
+        /// 能否死亡
+        /// </summary>
+        /// <returns></returns>
+        bool CanKill();
+        /// <summary>
+        /// 死亡
+        /// </summary>
+        void Kill();
     }
 }

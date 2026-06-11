@@ -3,37 +3,26 @@ using AboutCollide;
 using AboutDamage;
 using Content.IHelper;
 using UnityEngine;
-using static UnityEngine.Quaternion;
-using static UnityEngine.Vector3;
 
 namespace Content
 {
     public abstract class Actor : MonoBehaviour,IName,ISetting,ILevelable, IStats, ISkillCaster, IDamageable, IMovable, IStatusEffectCaster, IColliding , IDrawHelper,IAIControllable
     {
         #region 等级控制
-
-        public GameObject gameObject;
-        public int MaxLevel
-        {
-            get
-            {
-                return MaxLevel;
-            }
-            set
-            {
-                MaxLevel = 10;
-            }
-        }
+        public GameObject instance;
+        public int MaxLevel{set;get;}
         public int CurrentLevel { get; set; }
         public float MaxLevelProgress { get; set; }
         public float LevelProgress { get; set; }
-
-        public virtual void LevelUp()
+        public virtual void WhenLevelUp(){}
+        public void LevelUp()
         {
             if (CurrentLevel < MaxLevel)
+            {
                 CurrentLevel++;
+                WhenLevelUp();
+            }
         }
-
         #endregion
 
         #region 状态控制
@@ -48,46 +37,49 @@ namespace Content
         public float MagicDefense { get; set; }
         public float DamageReduce { get; set; }
         public bool IsActive => CurrentHealth > 0;
+        public virtual bool CanKill() => true;
+        public virtual void Kill(){}
         #endregion
 
         #region 技能控制
-
         public Skill[] Skills { get; set; }
-        public Skill CurrentSkill { get; set; }
-
-        public virtual bool CanUseSkill()
-        {
-            return CurrentMana > CurrentSkill.manaCost;
-        }
-        public virtual void UseSkill() {}
         #endregion
 
         #region 状态附着控制
         
         public List<StatusEffect> Effects { get; set; }
 
-        public bool CanUpdateEffect(StatusEffect effect)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public virtual void UpdateEffect(StatusEffect effect)
-        {
-            throw new System.NotImplementedException();
-        }
+        public virtual bool CanUpdateEffect(StatusEffect effect) => true;
 
         #endregion
 
         #region 伤害控制
 
         public Damage_class Damage_class { get; set; }
-        public virtual bool CanUnderAttack()
+        public virtual bool CanUnderAttack(Projectile projectile) => true;
+        public virtual void UnderAttack(Projectile projectile) {}
+        public bool CanUnderAttack(Character character) => true;
+        public void UnderAttack(Character character){}
+        public bool CanUnderAttack(NPC npc) => true;
+        public void UnderAttack(NPC npc){}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="npc"></param>
+        /// <param name="damageAmount"></param>
+        public virtual void TakeDamage(NPC npc,Damage_class damageAmount)
         {
-            throw new System.NotImplementedException();
+            CurrentHealth -= damageAmount.GetDamage(npc) * (1 - DamageReduce / 100f);
+            if(!IsActive&&CanKill())
+                Kill();
         }
 
-        public virtual void UnderAttack(){}
-        public virtual void TakeDamage(Damage_class damageAmount){}
+        public virtual void TakeDamage(Character character, Damage_class damageAmount)
+        {
+            CurrentHealth -= damageAmount.GetDamage(character) * (1 - DamageReduce / 100f);
+            if(!IsActive&&CanKill())
+                Kill();
+        }
         public virtual void OnHitNPC(NPC npc){}
         
         public virtual void OnHitCharacter(Character character){}
@@ -108,12 +100,12 @@ namespace Content
         #region 碰撞控制
         public HitBox HitBox { get; set; }
 
-        public bool Colliding(HitBox targetBox)
+        public virtual bool Colliding(HitBox targetBox)
         {
-            throw new System.NotImplementedException();
+            return targetBox.Intersects(HitBox);
         }
 
-        public void ModifyHitBox(HitBox box){}
+        public virtual void ModifyHitBox(HitBox box){}
 
         #endregion
 
@@ -136,7 +128,12 @@ namespace Content
 
         #region 值设置
 
-        public virtual void SetDefault(){}
+        public virtual void SetDefault()
+        {
+            MaxLevel = 10;
+            Skills = new Skill[3];
+            Effects = new List<StatusEffect>();
+        }
         public virtual void Modify(){}
         #endregion
     }

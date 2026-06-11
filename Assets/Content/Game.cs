@@ -46,7 +46,12 @@ namespace  Content
         /// <summary>
         /// 地图
         /// </summary>
-        public Map map { get; set; }
+        public Map Map { get; set; }
+        
+        public Character MainCharacter
+        {
+            get => Map.MainCharacter;
+        }
         #endregion
 
         void Start()
@@ -57,20 +62,12 @@ namespace  Content
         
         void Update()
         {
-            instance.map.MainCharacter.AI();
-            if (instance.map.MainCharacter.PreDraw())
+            instance.Map.MainCharacter.OnUpdate();
+            instance.Map.MainCharacter.OnDraw();
+            foreach(Character character in instance.Map.SecondaryCharacter)
             {
-                instance.map.MainCharacter.Draw();
-                instance.map.MainCharacter.PostDraw();
-            }
-            foreach(Character character in instance.map.SecondaryCharacter)
-            {
-                character.AI();
-                if(character.PreDraw())
-                {
-                    character.Draw();
-                    character.PostDraw();
-                }
+                character.OnUpdate();
+                character.OnDraw();
             }
 
             foreach (NPC npc in instance.NPCs)
@@ -90,9 +87,16 @@ namespace  Content
 
                 foreach (NPC npc in instance.NPCs)
                 {
-                    proj.Colliding(npc.HitBox);
-                    proj.OnHitNPC(npc);
-                    
+                    if (proj.Colliding(npc.HitBox))
+                    {
+                        proj.OnHitNPC(npc);
+                    }
+                }
+
+                if (proj.Colliding(MainCharacter.HitBox))
+                {
+                    proj.OnHitCharacter(MainCharacter);
+                    MainCharacter.OnUnderAttack(proj);
                 }
             }
         }

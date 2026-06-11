@@ -13,11 +13,6 @@ namespace Content.IHelper
         /// </summary>
         List<StatusEffect> Effects { get; set; }
         /// <summary>
-        /// 状态更新方法
-        /// </summary>
-        /// <param name="effect">状态</param>
-        void UpdateEffect(StatusEffect effect);
-        /// <summary>
         /// 状态能否更新？
         /// </summary>
         /// <param name="effect">状态</param>

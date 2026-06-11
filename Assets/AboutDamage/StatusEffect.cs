@@ -48,32 +48,30 @@ namespace AboutDamage
 
         #region 基本方法
         /// <summary>
-        /// 绑定NPC
-        /// </summary>
-        /// <param name="npc">NPC</param>
-        public void GetNPC(Func<NPC> npc) => _npc = npc;
-        /// <summary>
-        /// 绑定角色
-        /// </summary>
-        /// <param name="character">角色</param>
-        public void GetCharacter(Func<Character> character) => _character = character;
-        /// <summary>
         /// 更新(每帧
         /// </summary>
-        public virtual void Update()
+        /// <param name="c">角色</param>
+        public void Update(Character c)
         {
             timer += Time.deltaTime;
             timeLeft-= Time.deltaTime;
+            Update_Frame(c);
             if (timer >= 1f)
             {
                 timer -= 1f;
-                Update_Second();
+                Update_Second(c);
             }
         }
         /// <summary>
         /// 更新(每秒
         /// </summary>
-        public virtual void Update_Second(){}
+        /// <param name="c">角色</param>
+        public virtual void Update_Second(Character c){}
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="c">角色</param>
+        public virtual void Update_Frame(Character c){}
         /// <summary>
         /// 层数叠加
         /// </summary>

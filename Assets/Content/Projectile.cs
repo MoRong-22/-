@@ -14,13 +14,15 @@ namespace Content
         #region 伤害控制
 
         public Damage_class Damage_class { get; set; }
-        public virtual bool CanUnderAttack()
-        {
-            throw new System.NotImplementedException();
-        }
-
+        public virtual bool CanUnderAttack(Projectile projectile) => true;
+        public virtual void UnderAttack(Projectile projectile) {}
+        public bool CanUnderAttack(Character character) => true;
+        public void UnderAttack(Character character){}
+        public bool CanUnderAttack(NPC npc) => true;
+        public void UnderAttack(NPC npc){}
         public virtual void UnderAttack(){}
-        public virtual void TakeDamage(Damage_class damageAmount){}
+        public virtual void TakeDamage(NPC npc,Damage_class damageAmount){}
+        public virtual void TakeDamage(Character character, Damage_class damageClass){}
         public virtual void OnHitNPC(NPC npc){}
         
         public virtual void OnHitCharacter(Character character){}
@@ -31,7 +33,7 @@ namespace Content
         public HitBox HitBox { get; set; }
         public virtual bool Colliding(HitBox targetBox)
         {
-            throw new System.NotImplementedException();
+            return targetBox.Intersects(HitBox);
         }
         #endregion
         
