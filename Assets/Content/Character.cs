@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Content.IHelper;
+
 //TODO : 需要补全按键检测 整体运行逻辑
 namespace Content
 {
-    public abstract class Character : Actor
+    public abstract class Character : Actor,IRunF,IUnderAttack
     {
         public List<Props>  Props { get; set; }
         public List<Slots>  Slots { get; set; }
@@ -26,7 +28,8 @@ namespace Content
                 if(CanUpdateEffect(effect))
                     effect.Update(this);
         }
-
+        public void OnFixedUpdate(){}
+        public void OnLateUpdate(){}
         public void OnUnderAttack(Projectile projectile)
         {
             UnderAttack(projectile);

@@ -3,16 +3,15 @@ using UnityEngine;
 
 namespace Content
 {
-    public abstract class LifeCycle : MonoBehaviour,IUpdateable,IDrawHelper,IMovable
+    public abstract class LifeCycle : MonoBehaviour,IUpdateable,IDrawHelper,IMovable,IRunF
     {
         #region 更新控制
         public float TimeLeft { get; set; }
         public float MaxTimeLeft { get; set; }
         public bool IsActive => TimeLeft > 0;
 
-        public virtual void OnUpdate() { }
-        public virtual void OnFixedUpdate() { }
-
+        public virtual void Update() { }
+        public virtual void FixedUpdate() { }
         #endregion
         
         #region 移动控制
@@ -33,5 +32,24 @@ namespace Content
         public virtual bool PreDraw() => true;
         public virtual void PostDraw(){}
         #endregion
+
+        public void OnUpdate()
+        {
+            Update();
+        }
+
+        public void OnFixedUpdate()
+        {
+            FixedUpdate();
+        }
+        public void OnLateUpdate(){}
+        public void OnDraw()
+        {
+            if (PreDraw())
+            {
+                Draw();
+                PostDraw();
+            }
+        }
     }
 }

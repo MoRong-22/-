@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using Content;
-using Content.Drawing;
 using UnityEngine;
 
 namespace  Content
 {
+    //TODO : 游戏开始: NewDay执行 随机提供几个事件供玩家选择 然后等事件全部结束以后 结算 获取金币 道具 饰品 ！！每个角色都会有自己的专属饰品或者道具！！
     public class Game : MonoBehaviour
     {
         #region 每个游戏自带的实例
@@ -12,7 +11,7 @@ namespace  Content
         /// <summary>
         /// 游戏实例
         /// </summary>
-        public static Game instance;
+        public static Game Instance;
         /// <summary>
         /// 每日结束
         /// </summary>
@@ -33,7 +32,10 @@ namespace  Content
         /// 每日事件
         /// </summary>
         public DayEvent DayEvents { get; set; }
-
+        /// <summary>
+        /// 粒子对象池
+        /// </summary>
+        public List<Dusts> Dusts { get; set; } = new List<Dusts>();
         /// <summary>
         /// 射弹对象池 
         /// </summary>
@@ -59,37 +61,61 @@ namespace  Content
             
         }
 
-        
-        void Update()
+        public void FixedUpdate()
         {
-            instance.Map.MainCharacter.OnUpdate();
-            instance.Map.MainCharacter.OnDraw();
-            foreach(Character character in instance.Map.SecondaryCharacter)
+            foreach (Character character in Instance.Characters)
+            {
+                character.OnFixedUpdate();
+            }
+
+            foreach (NPC npc in Instance.NPCs)
+            {
+                npc.OnFixedUpdate();
+            }
+
+            foreach (Projectile proj in Instance.Projectiles)
+            {
+                proj.OnFixedUpdate();
+            }
+
+            foreach (Dusts dust in Instance.Dusts)
+            {
+                dust.OnFixedUpdate();
+            }
+        }
+        
+        public void Update()
+        {
+            MainCharacter.OnUpdate();
+            MainCharacter.OnDraw();
+            foreach(Character character in Instance.Map.SecondaryCharacter)
             {
                 character.OnUpdate();
                 character.OnDraw();
             }
 
-            foreach (NPC npc in instance.NPCs)
+            foreach (NPC npc in Instance.NPCs)
             {
-                
+                npc.OnUpdate();
+                npc.OnDraw();
+                if (npc.Colliding(MainCharacter.HitBox))
+                {
+                    npc.OnHitNPC(npc);
+                    MainCharacter.OnUnderAttack(npc);
+                }
             }
 
-            foreach (Projectile proj in instance.Projectiles)
+            foreach (Projectile proj in Instance.Projectiles)
             {
                 proj.OnUpdate();
-                proj.OnFixedUpdate();
-                if (proj.PreDraw())
-                {
-                    proj.Draw();
-                    proj.PostDraw();
-                }
+                proj.OnDraw();
 
-                foreach (NPC npc in instance.NPCs)
+                foreach (NPC npc in Instance.NPCs)
                 {
                     if (proj.Colliding(npc.HitBox))
                     {
-                        proj.OnHitNPC(npc);
+                        proj.OnHitCharacter(MainCharacter);
+                        MainCharacter.OnUnderAttack(npc);
                     }
                 }
 
@@ -99,6 +125,78 @@ namespace  Content
                     MainCharacter.OnUnderAttack(proj);
                 }
             }
+
+            foreach (Dusts dust in Instance.Dusts)
+            {
+                dust.OnUpdate();
+                dust.OnDraw();
+            }
+            
+        }
+
+        public void LateUpdate()
+        {
+            foreach (Character character in Instance.Characters)
+            {
+                character.OnLateUpdate();
+            }
+
+            foreach (NPC npc in Instance.NPCs)
+            {
+                npc.OnLateUpdate();
+            }
+
+            foreach (Projectile proj in Instance.Projectiles)
+            {
+                proj.OnLateUpdate();
+            }
+
+            foreach (Dusts dust in Instance.Dusts)
+            {
+                dust.OnLateUpdate();
+            }
+            #region 列表自检 删除
+            for (int i = Instance.Projectiles.Count - 1; i >= 0; i--)
+            {
+                if (!Projectiles[i].IsActive)
+                {
+                    Destroy(Projectiles[i].gameObject);
+                    Projectiles.RemoveAt(i);
+                }
+            }
+
+            for (int i = Instance.NPCs.Count - 1; i >= 0; i--)
+            {
+                if (!NPCs[i].IsActive)
+                {
+                    Destroy(NPCs[i].gameObject);
+                    NPCs.RemoveAt(i);
+                }
+            }
+            for (int i = Instance.Projectiles.Count - 1; i >= 0; i--)
+            {
+                if (!Projectiles[i].IsActive)
+                {
+                    Destroy(Projectiles[i].gameObject);
+                    Projectiles.RemoveAt(i);
+                }
+            }
+            for (int i = Instance.Dusts.Count - 1; i >= 0; i--)
+            {
+                if (!Dusts[i].IsActive)
+                {
+                    Destroy(Dusts[i].gameObject);
+                    Dusts.RemoveAt(i);
+                }
+            } 
+            #endregion
+        }
+        /// <summary>
+        /// 新的一天！！ 每天开始运行的方法 主要用于提供随机事件
+        /// </summary>
+        public void NewDay()
+        {
+            
         }
     }
 

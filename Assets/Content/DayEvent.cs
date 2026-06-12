@@ -77,7 +77,7 @@ namespace Content
         /// <typeparam name="T"></typeparam>
         public static void SetEvent<T>(T @event) where T : DayEvent
         {
-            Game.instance.DayEvents = @event;
+            Game.Instance.DayEvents = @event;
         }
         #endregion
     }

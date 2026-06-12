@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using AboutCollide;
+﻿using System.Linq;
 using AboutDamage;
 using UnityEngine;
 
@@ -22,12 +20,12 @@ namespace Content.Projectiles.FirstCharacter
             this.Speed = speed;
         }
 
-        public override void OnUpdate()
+        public override void Update()
         {
             // 未链接时重连所有旗子
             if (!isLink)
             {
-                foreach (var proj in Game.instance.Projectiles)
+                foreach (var proj in Game.Instance.Projectiles)
                 {
                     if (proj is ArrayFlag flag)
                         flag.CheckLink();
@@ -35,17 +33,12 @@ namespace Content.Projectiles.FirstCharacter
             }
         }
 
-        public override bool Colliding(HitBox targetBox)
-        {
-            return base.Colliding(targetBox);
-        }
-
         /// <summary>
         /// 链接最近的 2 个同类旗子
         /// </summary>
         public void CheckLink()
         {
-            var flags = Game.instance.Projectiles
+            var flags = Game.Instance.Projectiles
                 .OfType<ArrayFlag>()
                 .Where(f => f != this)
                 .OrderBy(f => Vector3.Distance(this.Center, f.Center))
