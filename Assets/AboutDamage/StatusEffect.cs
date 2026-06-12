@@ -62,6 +62,19 @@ namespace AboutDamage
                 Update_Second(c);
             }
         }
+        public void Update(NPC npc)
+        {
+            timer += Time.deltaTime;
+            timeLeft-= Time.deltaTime;
+            Update_Frame(npc);
+            if (timer >= 1f)
+            {
+                timer -= 1f;
+                Update_Second(npc);
+            }
+        }
+        public virtual void Update_Second(NPC npc){}
+        public virtual void Update_Frame(NPC npc){}
         /// <summary>
         /// 更新(每秒
         /// </summary>

@@ -33,7 +33,10 @@ namespace  Content
         /// 每日事件
         /// </summary>
         public DayEvent DayEvents { get; set; }
-
+        /// <summary>
+        /// 粒子对象池
+        /// </summary>
+        public List<Dusts> Dusts { get; set; } = new List<Dusts>();
         /// <summary>
         /// 射弹对象池 
         /// </summary>
@@ -62,8 +65,8 @@ namespace  Content
         
         void Update()
         {
-            instance.Map.MainCharacter.OnUpdate();
-            instance.Map.MainCharacter.OnDraw();
+            MainCharacter.OnUpdate();
+            MainCharacter.OnDraw();
             foreach(Character character in instance.Map.SecondaryCharacter)
             {
                 character.OnUpdate();
@@ -72,24 +75,28 @@ namespace  Content
 
             foreach (NPC npc in instance.NPCs)
             {
-                
+                npc.OnUpdate();
+                npc.OnDraw();
+                if (npc.Colliding(MainCharacter.HitBox))
+                {
+                    npc.OnHitNPC(npc);
+                    MainCharacter.OnUnderAttack(npc);
+                }
             }
 
             foreach (Projectile proj in instance.Projectiles)
             {
-                proj.OnUpdate();
                 proj.OnFixedUpdate();
-                if (proj.PreDraw())
-                {
-                    proj.Draw();
-                    proj.PostDraw();
-                }
+                proj.OnUpdate();
+                proj.OnLateUpdate();
+                proj.OnDraw();
 
                 foreach (NPC npc in instance.NPCs)
                 {
                     if (proj.Colliding(npc.HitBox))
                     {
-                        proj.OnHitNPC(npc);
+                        proj.OnHitCharacter(MainCharacter);
+                        MainCharacter.OnUnderAttack(npc);
                     }
                 }
 
@@ -99,6 +106,48 @@ namespace  Content
                     MainCharacter.OnUnderAttack(proj);
                 }
             }
+
+            foreach (Dusts dust in instance.Dusts)
+            {
+                dust.OnFixedUpdate();
+                dust.OnUpdate();
+                dust.OnLateUpdate();
+                dust.OnDraw();
+            }
+            for (int i = instance.Projectiles.Count - 1; i >= 0; i--)
+            {
+                if (!Projectiles[i].IsActive)
+                {
+                    Destroy(Projectiles[i].gameObject);
+                    Projectiles.RemoveAt(i);
+                }
+            }
+
+            for (int i = instance.NPCs.Count - 1; i >= 0; i--)
+            {
+                if (!NPCs[i].IsActive)
+                {
+                    Destroy(NPCs[i].gameObject);
+                    NPCs.RemoveAt(i);
+                }
+            }
+            for (int i = instance.Projectiles.Count - 1; i >= 0; i--)
+            {
+                if (!Projectiles[i].IsActive)
+                {
+                    Destroy(Projectiles[i].gameObject);
+                    Projectiles.RemoveAt(i);
+                }
+            }
+            for (int i = instance.Dusts.Count - 1; i >= 0; i--)
+            {
+                if (!Dusts[i].IsActive)
+                {
+                    Destroy(Dusts[i].gameObject);
+                    Dusts.RemoveAt(i);
+                }
+            }
+            
         }
     }
 

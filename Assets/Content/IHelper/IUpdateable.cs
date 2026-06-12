@@ -20,10 +20,10 @@ namespace Content.IHelper
         /// <summary>
         /// 更新方法
         /// </summary>
-        void OnUpdate();
+        void Update();
         /// <summary>
         /// 更新修补
         /// </summary>
-        void OnFixedUpdate();
+        void FixedUpdate();
     }
 }

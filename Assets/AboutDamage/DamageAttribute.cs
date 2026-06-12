@@ -2,7 +2,6 @@
 
 namespace AboutDamage
 {
-    //TODO： 专门服务于法术伤害 法术的细分支
     /// <summary>
     /// 伤害属性类
     /// </summary>

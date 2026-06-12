@@ -9,8 +9,8 @@ namespace Content
         public float MaxTimeLeft { get; set; }
         public float TimeLeft { get; set; }
         public bool IsActive { get => TimeLeft > 0; }
-        public virtual void OnUpdate(){}
-        public virtual void OnFixedUpdate(){}
+        public virtual void Update(){}
+        public virtual void FixedUpdate(){}
         #endregion
     }
 }

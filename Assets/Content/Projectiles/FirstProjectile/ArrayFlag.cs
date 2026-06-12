@@ -22,7 +22,7 @@ namespace Content.Projectiles.FirstCharacter
             this.Speed = speed;
         }
 
-        public override void OnUpdate()
+        public override void Update()
         {
             // 未链接时重连所有旗子
             if (!isLink)

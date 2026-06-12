@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AboutCollide;
 using AboutDamage;
@@ -9,6 +10,14 @@ namespace Content
     public abstract class Projectile : LifeCycle,IDamageable,IColliding
     {
         public GameObject projectilePrefab;
+        /// <summary>
+        /// 设置默认值
+        /// </summary>
+        /// <param name="damageClass">伤害</param>
+        /// <param name="position">位置</param>
+        /// <param name="rotation">旋转</param>
+        /// <param name="velocity">速度方向</param>
+        /// <param name="speed">速度</param>
         public virtual void SetDefault(Damage_class damageClass,Vector3 position, Quaternion rotation, Vector3 velocity, float speed){}
         
         #region 伤害控制
@@ -20,7 +29,6 @@ namespace Content
         public void UnderAttack(Character character){}
         public bool CanUnderAttack(NPC npc) => true;
         public void UnderAttack(NPC npc){}
-        public virtual void UnderAttack(){}
         public virtual void TakeDamage(NPC npc,Damage_class damageAmount){}
         public virtual void TakeDamage(Character character, Damage_class damageClass){}
         public virtual void OnHitNPC(NPC npc){}
@@ -37,11 +45,16 @@ namespace Content
         }
         #endregion
         
+        
+        
+        
+        
+        
         /// <summary>
         /// 创建弹幕：new 一个空物体 + AddComponent，加入对象池
         /// 视觉由子类在 Awake/Start 里自己处理
         /// </summary>
-        public static T NewProjectile<T>(Vector3 position, Quaternion rotation,
+        public static Func<T> NewProjectile<T>(Vector3 position, Quaternion rotation,
             Vector3 velocity, float speed, Damage_class damageClass) where T : Projectile
         {
             GameObject obj = new(typeof(T).Name);
@@ -50,7 +63,7 @@ namespace Content
             T proj = obj.AddComponent<T>();
             proj.SetDefault(damageClass, position, rotation, velocity, speed);
             Game.instance.Projectiles.Add(proj);
-            return proj;
+            return () => proj;
         }
     }
 }
