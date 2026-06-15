@@ -29,6 +29,10 @@ namespace  Content
         /// </summary>
         public List<Character> Characters { get;set; } = new List<Character>();
         /// <summary>
+        /// 游戏记录
+        /// </summary>
+        public Settlement Settlement { get; set; }
+        /// <summary>
         /// 每日事件
         /// </summary>
         public DayEvent DayEvents { get; set; }

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = System.Random;
 
@@ -29,20 +31,44 @@ namespace Content
         /// </summary>
         public bool End { get; set; }
         #endregion
-        public enum Rare
-        {
-            Common,//普通
-            Uncommon,//不常见
-            Rare,//稀有
-            Epic,//史诗
-            Legendary//传奇
-        }
         /// <summary>
         /// 随机数
         /// </summary>
         private Random _random = new Random();
         
+        private static Dictionary<Rare, float> RareWeights = new()
+        {
+            { Rare.Common, 50 },      // 50% 概率
+            { Rare.Uncommon, 25 },     // 25%
+            { Rare.Rare, 15 },         // 15%
+            { Rare.Epic, 8 },          // 8%
+            { Rare.Legendary, 2 },     // 2%
+        };
+        public static List<DayEvent>  DayEvents { get;  set; }
         #region 基础方法
+        public static DayEvent PickWeighted()
+        {
+            // 先随机稀有度，再在该稀有度里随机选一个
+            float totalWeight = 0;
+            foreach (var w in RareWeights.Values) totalWeight += w;
+
+            float roll = UnityEngine.Random.Range(0, totalWeight);
+            float acc = 0;
+            Rare picked = Rare.Common;
+
+            foreach (var kv in RareWeights)
+            {
+                acc += kv.Value;
+                if (roll <= acc) { picked = kv.Key; break; }
+            }
+
+            // 从该稀有度的事件里随机取一个
+            var candidates = DayEvents.Where(e => e.Rarity == picked).ToList();
+            if (candidates.Count == 0)
+                candidates = DayEvents;  // 该稀有度没事件时退回到所有事件
+
+            return candidates[UnityEngine.Random.Range(0, candidates.Count)];
+        }
         /// <summary>
         /// 获取战利品
         /// </summary>

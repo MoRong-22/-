@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Content
 {
-    public abstract class Actor : MonoBehaviour,IName,ISetting,ILevelable, IStats, ISkillCaster, IDamageable, IMovable, IStatusEffectCaster, IColliding , IDrawHelper,IAIControllable
+    public abstract class Actor : MonoBehaviour,IRare,IName,ISetting,ILevelable, IStats, ISkillCaster, IDamageable, IMovable, IStatusEffectCaster, IColliding , IDrawHelper,IAIControllable
     {
         #region 等级控制
         public GameObject instance;
@@ -25,8 +25,11 @@ namespace Content
         }
         #endregion
 
+        #region 价值接口
+        public Rare Rare {get;set;}
+        public float Coin { get; set; }
+        #endregion
         #region 状态控制
-
         public float MaxHealth { get; set; }
         public float CurrentHealth { get; set; }
         public float HealthRegen { get; set; }
