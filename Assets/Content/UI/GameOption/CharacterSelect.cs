@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Content.UI.GameOption
 {
@@ -11,6 +12,7 @@ namespace Content.UI.GameOption
         {
             Renderer renderer = characterSelectDisplay.GetComponent<Renderer>();
             renderer.material.mainTexture = UITexture;
+            SceneManager.LoadSceneAsync("CharacterSelect");
         }
     }
 }

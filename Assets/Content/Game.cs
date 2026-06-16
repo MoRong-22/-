@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace  Content
@@ -6,8 +7,9 @@ namespace  Content
     //TODO : 游戏开始: NewDay执行 随机提供几个事件供玩家选择 然后等事件全部结束以后 结算 获取金币 道具 饰品 ！！每个角色都会有自己的专属饰品或者道具！！
     public class Game : MonoBehaviour
     {
+        public GameObject GameOver;
+        
         #region 每个游戏自带的实例
-
         /// <summary>
         /// 游戏实例
         /// </summary>
@@ -104,7 +106,7 @@ namespace  Content
                 npc.OnDraw();
                 if (npc.Colliding(MainCharacter.HitBox))
                 {
-                    npc.OnHitNPC(npc);
+                    npc.OnHitCharacter(MainCharacter);
                     MainCharacter.OnUnderAttack(npc);
                 }
             }
@@ -118,7 +120,7 @@ namespace  Content
                 {
                     if (proj.Colliding(npc.HitBox))
                     {
-                        proj.OnHitCharacter(MainCharacter);
+                        proj.OnHitNPC(npc);
                         MainCharacter.OnUnderAttack(npc);
                     }
                 }
@@ -175,14 +177,6 @@ namespace  Content
                 {
                     Destroy(NPCs[i].gameObject);
                     NPCs.RemoveAt(i);
-                }
-            }
-            for (int i = Instance.Projectiles.Count - 1; i >= 0; i--)
-            {
-                if (!Projectiles[i].IsActive)
-                {
-                    Destroy(Projectiles[i].gameObject);
-                    Projectiles.RemoveAt(i);
                 }
             }
             for (int i = Instance.Dusts.Count - 1; i >= 0; i--)

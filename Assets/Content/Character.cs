@@ -36,6 +36,8 @@ namespace Content
             foreach(var slot in Slots)
                 slot.ByHit(this, projectile);
             TakeDamage(this,projectile.Damage_class);
+            if (CanKill())
+                Game.Instance.GameOver.SetActive(true);
         }
 
         public void OnUnderAttack(NPC npc)
@@ -44,7 +46,18 @@ namespace Content
             foreach(var slot in Slots)
                 slot.ByHit(this, npc);
             TakeDamage(this,npc.Damage_class);
+            
         }
+
+        public override void OnKill()
+        {
+            if (!IsActive && CanKill())
+            {
+                Kill();
+                Game.Instance.GameOver.SetActive(true);
+            }
+        }
+
         public void OnDraw()
         {
             if (PreDraw())

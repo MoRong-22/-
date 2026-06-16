@@ -29,6 +29,16 @@ namespace Content
             UnderAttack(npc);
             TakeDamage(this,npc.Damage_class);
         }
+
+        public override void OnKill()
+        {
+            if (!IsActive&&CanKill())
+            {
+                Kill();
+                Game.Instance.Settlement.KillRecord(Name,1);
+            }
+        }
+
         public void OnDraw()
         {
             if (PreDraw())

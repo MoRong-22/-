@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Content
 {
-    public abstract class Actor : MonoBehaviour,IRare,IName,ISetting,ILevelable, IStats, ISkillCaster, IDamageable, IMovable, IStatusEffectCaster, IColliding , IDrawHelper,IAIControllable
+    public abstract class Actor : MonoBehaviour,IKill,IRare,IName,ISetting,ILevelable, IStats, ISkillCaster, IDamageable, IMovable, IStatusEffectCaster, IColliding , IDrawHelper,IAIControllable
     {
         #region 等级控制
         public GameObject instance;
@@ -25,6 +25,12 @@ namespace Content
         }
         #endregion
 
+        #region 死亡接口
+        public virtual bool CanKill() => true;
+        public virtual void Kill(){}
+
+        public virtual void OnKill(){}
+        #endregion
         #region 价值接口
         public Rare Rare {get;set;}
         public float Coin { get; set; }
@@ -40,8 +46,6 @@ namespace Content
         public float MagicDefense { get; set; }
         public float DamageReduce { get; set; }
         public bool IsActive => CurrentHealth > 0;
-        public virtual bool CanKill() => true;
-        public virtual void Kill(){}
         #endregion
 
         #region 技能控制
@@ -73,15 +77,13 @@ namespace Content
         public virtual void TakeDamage(NPC npc,Damage_class damageAmount)
         {
             CurrentHealth -= damageAmount.GetDamage(npc) * (1 - DamageReduce / 100f);
-            if(!IsActive&&CanKill())
-                Kill();
+            OnKill();
         }
 
         public virtual void TakeDamage(Character character, Damage_class damageAmount)
         {
             CurrentHealth -= damageAmount.GetDamage(character) * (1 - DamageReduce / 100f);
-            if(!IsActive&&CanKill())
-                Kill();
+            OnKill();
         }
         public virtual void OnHitNPC(NPC npc){}
         

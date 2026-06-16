@@ -18,6 +18,15 @@ namespace Content
         /// </summary>
         /// <param name="character"></param>
         public virtual void Use(Character character){}
+
+        public void OnUse(Character character)
+        {
+            if (CanUse(character))
+            {
+                OnUse(character);
+                Game.Instance.Settlement.ItemRecord(name,1);
+            }
+        }
         #endregion
     }
 }
