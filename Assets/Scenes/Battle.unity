@@ -4523,8 +4523,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -24.726929, y: -123.335884}
-  m_SizeDelta: {x: 50, y: -246.66777}
+  m_AnchoredPosition: {x: -31.55429, y: -188.81082}
+  m_SizeDelta: {x: 63.1087, y: -377.6173}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1370357399
 MonoBehaviour:
@@ -6349,13 +6349,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 577176138641735161, guid: 57b4e3e86a4e78d41976d45d96839594, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 94166790b95302f4e8c934bf461c9c54, type: 2}
     - target: {fileID: 8152119468159856160, guid: 57b4e3e86a4e78d41976d45d96839594, type: 3}
       propertyPath: m_Name
       value: YunHeng
       objectReference: {fileID: 0}
     - target: {fileID: 8152119468159856160, guid: 57b4e3e86a4e78d41976d45d96839594, type: 3}
       propertyPath: m_TagString
-      value: Ally
+      value: MainCharacter
       objectReference: {fileID: 0}
     - target: {fileID: 8963381091810927224, guid: 57b4e3e86a4e78d41976d45d96839594, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6404,7 +6408,22 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8152119468159856160, guid: 57b4e3e86a4e78d41976d45d96839594, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1294286559}
+    - targetCorrespondingSourceObject: {fileID: 8152119468159856160, guid: 57b4e3e86a4e78d41976d45d96839594, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1324221697031867126}
   m_SourcePrefab: {fileID: 100100000, guid: 57b4e3e86a4e78d41976d45d96839594, type: 3}
+--- !u!114 &1324221697031867126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294286555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08ba571d7cee45c4ba20dc7d6fd9fc85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MainCharacterController
 --- !u!1001 &2615374092408577323
 PrefabInstance:
   m_ObjectHideFlags: 0

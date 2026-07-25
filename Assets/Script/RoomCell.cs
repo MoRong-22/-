@@ -28,7 +28,7 @@ public class RoomCell : MonoBehaviour
         int count = Physics2D.OverlapCollider(roomCollider, filter, scanBuffer);
         for (int i = 0; i < count; i++)
         {
-            if (scanBuffer[i].CompareTag("Ally"))
+            if (scanBuffer[i].CompareTag("Ally")|| scanBuffer[i].CompareTag("MainCharacter"))
             {
                 hasGuardian = true;
                 break;

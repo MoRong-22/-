@@ -3,12 +3,14 @@ using UnityEngine.UI;
 
 public class SkillButton : MonoBehaviour
 {
+    private Animator ani;
     private void Awake()
     {
-        
+        GameObject mainCharacter = GameObject.FindWithTag("MainCharacter");
+        ani= mainCharacter.GetComponent<Animator>();
     }
     public void Onclike()
     {
-        Debug.Log("御剑术点击成功");
+        ani.SetBool("SkillAttack1", true);
     }
 }
