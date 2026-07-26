@@ -5,21 +5,20 @@ using Content.IHelper;
 //TODO : 需要补全按键检测 整体运行逻辑
 namespace Content
 {
-    public abstract class Character : Actor,IRunF,IUnderAttack
+    public abstract class Character : Actor,IUnderAttack
     {
         public List<Props>  Props { get; set; }
         public List<Slots>  Slots { get; set; }
         public override void SetDefault()
         {
             CurrentLevel = 1;
-            
             Slots = new List<Slots>();
             Props = new List<Props>();
             base.SetDefault();
         }
         public void OnUpdate()
         {
-            AI();
+            //AI();
             foreach (var slot in Slots)
                 slot.SlotUpdate(this);
             foreach (var skill in Skills)
@@ -46,7 +45,6 @@ namespace Content
             foreach(var slot in Slots)
                 slot.ByHit(this, npc);
             TakeDamage(this,npc.Damage_class);
-            
         }
 
         public override void OnKill()
@@ -57,14 +55,13 @@ namespace Content
                 Game.Instance.GameOver.SetActive(true);
             }
         }
-
-        public void OnDraw()
-        {
-            if (PreDraw())
-            {
-                Draw();
-                PostDraw();
-            }
-        }
+        //public void OnDraw()
+        //{
+        //    if (PreDraw())
+        //    {
+        //        Draw();
+        //        PostDraw();
+        //    }
+        //}
     }
 }

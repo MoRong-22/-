@@ -6,10 +6,6 @@ namespace Content.IHelper
     public interface ILevelable
     {
         /// <summary>
-        /// 最大等级
-        /// </summary>
-        int MaxLevel { get; set; }
-        /// <summary>
         /// 当前等级
         /// </summary>
         int CurrentLevel { get; set; }

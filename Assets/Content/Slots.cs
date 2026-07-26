@@ -12,7 +12,7 @@ namespace Content
         public virtual void SlotUpdate(Character character){}
         public virtual void HitNPC(Character character, NPC target){}
         public virtual void ByHit(Character character, NPC target){}
-        public void ByHit(Character character, Projectile projectile){}
+        public virtual void ByHit(Character character, Projectile projectile){}
         #endregion
     }
 }

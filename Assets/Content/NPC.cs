@@ -11,7 +11,7 @@ namespace Content
         }
         public void OnUpdate()
         {
-            AI();
+            //AI();
             foreach (var effect in Effects)
                 if(CanUpdateEffect(effect))
                     effect.Update(this);

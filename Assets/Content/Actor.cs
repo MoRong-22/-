@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AboutCollide;
 using AboutDamage;
@@ -6,22 +7,28 @@ using UnityEngine;
 
 namespace Content
 {
-    public abstract class Actor : MonoBehaviour,IKill,IRare,IName,ISetting,ILevelable, IStats, ISkillCaster, IDamageable, IMovable, IStatusEffectCaster, IColliding , IDrawHelper,IAIControllable
+    public abstract class Actor : MonoBehaviour,IKill,IRare,IName,ISetting,ILevelable, IStats, ISkillCaster, IDamageable,IStatusEffectCaster
     {
         #region 等级控制
         public GameObject instance;
-        public int MaxLevel{set;get;}
         public int CurrentLevel { get; set; }
         public float MaxLevelProgress { get; set; }
         public float LevelProgress { get; set; }
         public virtual void WhenLevelUp(){}
         public void LevelUp()
         {
-            if (CurrentLevel < MaxLevel)
+            while (LevelProgress >= MaxLevelProgress)
             {
+                LevelProgress -= MaxLevelProgress;
                 CurrentLevel++;
+                MaxLevelProgress = GetLevelNeedProgress(CurrentLevel);
                 WhenLevelUp();
             }
+        }
+
+        private float GetLevelNeedProgress(int currentLevel)
+        {
+            return 100 + currentLevel * 25;
         }
         #endregion
 
@@ -96,23 +103,23 @@ namespace Content
 
         #region 移动控制
 
-        public Vector3 Center { get; set; }
+        //public Vector3 Center { get; set; }
         public Quaternion Rotation { get; set; }
         public Vector3 Velocity { get; set; }
         public float Speed { get; set; }
         #endregion
 
-        #region 碰撞控制
-        public HitBox HitBox { get; set; }
+        //#region 碰撞控制
+        //public HitBox HitBox { get; set; }
 
-        public virtual bool Colliding(HitBox targetBox)
-        {
-            return targetBox.Intersects(HitBox);
-        }
+        //public virtual bool Colliding(HitBox targetBox)
+        //{
+        //    return targetBox.Intersects(HitBox);
+        //}
 
-        public virtual void ModifyHitBox(HitBox box){}
+        //public virtual void ModifyHitBox(HitBox box){}
 
-        #endregion
+        //#endregion
 
         #region 绘制所需
 
@@ -127,15 +134,14 @@ namespace Content
         public Texture2D Texture { get; set; }
         #endregion
 
-        #region AI控制
-        public virtual void AI(){}
-        #endregion
+        //#region AI控制
+        //public virtual void AI() { }
+        //#endregion
 
         #region 值设置
 
         public virtual void SetDefault()
         {
-            MaxLevel = 10;
             Skills = new Skill[3];
             Effects = new List<StatusEffect>();
         }

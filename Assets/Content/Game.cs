@@ -93,44 +93,44 @@ namespace  Content
         public void Update()
         {
             MainCharacter.OnUpdate();
-            MainCharacter.OnDraw();
+            //MainCharacter.OnDraw();
             foreach(Character character in Instance.Map.SecondaryCharacter)
             {
                 character.OnUpdate();
-                character.OnDraw();
+                //character.OnDraw();
             }
 
-            foreach (NPC npc in Instance.NPCs)
-            {
-                npc.OnUpdate();
-                npc.OnDraw();
-                if (npc.Colliding(MainCharacter.HitBox))
-                {
-                    npc.OnHitCharacter(MainCharacter);
-                    MainCharacter.OnUnderAttack(npc);
-                }
-            }
+            //foreach (NPC npc in Instance.NPCs)
+            //{
+            //    npc.OnUpdate();
+            //    npc.OnDraw();
+            //    if (npc.Colliding(MainCharacter.HitBox))
+            //    {
+            //        npc.OnHitCharacter(MainCharacter);
+            //        MainCharacter.OnUnderAttack(npc);
+            //    }
+            //}
 
-            foreach (Projectile proj in Instance.Projectiles)
-            {
-                proj.OnUpdate();
-                proj.OnDraw();
+            //foreach (Projectile proj in Instance.Projectiles)
+            //{
+            //    proj.OnUpdate();
+            //    proj.OnDraw();
 
-                foreach (NPC npc in Instance.NPCs)
-                {
-                    if (proj.Colliding(npc.HitBox))
-                    {
-                        proj.OnHitNPC(npc);
-                        MainCharacter.OnUnderAttack(npc);
-                    }
-                }
+            //    foreach (NPC npc in Instance.NPCs)
+            //    {
+            //        if (proj.Colliding(npc.HitBox))
+            //        {
+            //            proj.OnHitNPC(npc);
+            //            MainCharacter.OnUnderAttack(npc);
+            //        }
+            //    }
 
-                if (proj.Colliding(MainCharacter.HitBox))
-                {
-                    proj.OnHitCharacter(MainCharacter);
-                    MainCharacter.OnUnderAttack(proj);
-                }
-            }
+            //    if (proj.Colliding(MainCharacter.HitBox))
+            //    {
+            //        proj.OnHitCharacter(MainCharacter);
+            //        MainCharacter.OnUnderAttack(proj);
+            //    }
+            //}
 
             foreach (Dusts dust in Instance.Dusts)
             {
