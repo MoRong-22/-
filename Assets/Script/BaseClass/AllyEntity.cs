@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
     /// <summary>
     /// 玩家实体，拥有装备系统

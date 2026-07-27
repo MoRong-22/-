@@ -1,6 +1,4 @@
 using UnityEngine;
-using Content.IHelper;
-using System.Collections.Generic;
     /// <summary>
     /// 所有角色基类（玩家、怪物通用战斗属性）
     /// </summary>

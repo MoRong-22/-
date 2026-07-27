@@ -1,4 +1,4 @@
-using System.Buffers.Text;
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -76,10 +76,41 @@ public class MonsterControl : MonoBehaviour
     {
         Debug.Log("怪物停止行动，原地不动");
         // 清空AI，不再执行Update逻辑，怪物彻底停下
-        monsterAI = null;
+        //monsterAI = null;
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.simulated = true;
+        rb.gravityScale = 1;
+        Vector2 FlyForce = new Vector2(5f, 8f);
+        rb.AddForce(FlyForce, ForceMode2D.Impulse);
+        GetComponent<Collider2D>().enabled = false;
+        StartCoroutine(FadeOut(1.3f));
+        Destroy(gameObject, 1.3f);
+    }
+    IEnumerator FadeOut(float duration)
+    {
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        if (sprite == null)
+        {
+            Debug.LogError("找不到SpriteRenderer！");
+            yield break;
+        }
+        if (sprite == null) yield break;
+        // 等待0.8秒，维持完全不透明
+        yield return new WaitForSeconds(0.6f);
+        Color originColor = sprite.color;
+        float fadeDuration = 0.7f; 
+        float time = 0f;
 
-        //可选：关闭刚体移动、关闭碰撞等
-        //GetComponent<Rigidbody2D>().simulated = false;
+        while (time < fadeDuration)
+        {
+            time += Time.deltaTime;
+            float progress = Mathf.Clamp01(time / fadeDuration);
+            float alpha = 1 - progress;
+
+            sprite.color = new Color(originColor.r, originColor.g, originColor.b, alpha);
+            yield return null;
+        }
     }
     /// <summary>
     /// 怪物复活/刷新，重置AI状态
