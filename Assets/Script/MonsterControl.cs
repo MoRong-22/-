@@ -90,18 +90,11 @@ public class MonsterControl : MonoBehaviour
     IEnumerator FadeOut(float duration)
     {
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
-        if (sprite == null)
-        {
-            Debug.LogError("找不到SpriteRenderer！");
-            yield break;
-        }
         if (sprite == null) yield break;
-        // 等待0.8秒，维持完全不透明
         yield return new WaitForSeconds(0.6f);
         Color originColor = sprite.color;
         float fadeDuration = 0.7f; 
         float time = 0f;
-
         while (time < fadeDuration)
         {
             time += Time.deltaTime;
